@@ -2,7 +2,7 @@
 
 A modern, feature-rich task management application built with Flask and enhanced UX.
 
-![Todo App Screenshot](https://via.placeholder.com/800x400/6366f1/ffffff?text=Enhanced+Todo+List)
+![Todo App Screenshot](templates\screenshot.png)
 
 ## 🚀 Features
 
