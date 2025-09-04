@@ -1,4 +1,4 @@
-# Enhanced Todo List Application
+# Todo List Application
 
 A modern, feature-rich task management application built with Flask and enhanced UX.
 
