@@ -1,0 +1,16 @@
+<!-- templates/layout.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}MediQ{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
+  <!-- Any other CSS/JS imports -->
+</head>
+<body>
+  {% block content %}
+  {% endblock %}
+  
+  {% include "footer.html" %}
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Footer Component</title>
+  <!-- Font Awesome CDN for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Include the CSS below -->
+  <link rel="stylesheet" href="../static/css/footer.css">
+</head>
+<body>
+  <footer class="footer">
+    <!-- Logo -->
+    <div class="footer-logo">
+      <img src="images/logo.jpg" alt="Site Logo" />
+    </div>
+
+    <!-- Navigation Links -->
+    <nav class="footer-nav">
+      <ul>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+      </ul>
+    </nav>
+
+    <!-- Developer Links -->
+    <div class="footer-dev-links d-flex flex-column flex-md-row justify-content-center align-items-center gap-2 mt-3">
+      <a href="https://github.com/Binary-Explorers" target="_blank" rel="noopener noreferrer" title="GitHub Profile" class="footer-link d-flex align-items-center px-3 py-2 rounded bg-light shadow-sm">
+        <i class="fab fa-github me-2 fa-lg"></i> Main Org
+      </a>
+      <a href="https://github.com/Rajath2005/mediq.io" target="_blank" rel="noopener noreferrer" class="footer-link d-flex align-items-center px-3 py-2 rounded bg-light shadow-sm">
+        <i class="fab fa-github me-2 fa-sm"></i> Project Repo
+      </a>
+      <a href="https://github.com/Rajath2005/mediq.io/blob/main/README.md" target="_blank" rel="noopener noreferrer" class="footer-link d-flex align-items-center px-3 py-2 rounded bg-light shadow-sm">
+        <span class="me-2">📄</span> README
+      </a>
+      <a href="https://github.com/Sanath00007/ayurveda-api" target="_blank" rel="noopener noreferrer" class="footer-link d-flex align-items-center px-3 py-2 rounded bg-light shadow-sm">
+        <i class="fab fa-github me-2 fa-sm"></i> API Sub-Repo
+      </a>
+    </div>
+
+    <!-- Copyright -->
+    <div class="footer-copyright">
+      <small class="text-muted">
+        &copy; <span id="year"></span> MediQ. All rights reserved. | Built by❤️
+        <a href="https://github.com/Binary-Explorers" target="_blank" rel="noopener noreferrer" class="text-decoration-none text-dark fw-bold">
+          Binary Explorers
+        </a>
+      </small>
+    </div>
+  </footer>
+  <script>
+    // Show Current Year
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

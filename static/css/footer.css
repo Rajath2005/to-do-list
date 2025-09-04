@@ -1,0 +1,122 @@
+.footer {
+  background-color: #f8fafb;
+  color: #2c4964;
+  padding: 15px 20px;
+  text-align: center;
+  border-top: 1px solid #e6e9ef;
+  position: relative;
+  margin-top: 20px;
+  bottom: 0;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+body.dark-mode .footer {
+  background-color: #21262d;
+  color: #c9d1d9;
+  border-top-color: #30363d;
+}
+.footer-logo img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 3px 8px rgba(44, 73, 100, 0.15);
+  transition: transform 0.3s ease;
+  margin-bottom: 15px;
+}
+.footer-logo img:hover {
+  transform: translateY(-3px);
+}
+.footer-nav {
+  margin: 15px 0;
+}
+.footer-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+.footer-nav ul li a {
+  color: #2c4964;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 400;
+  transition: color 0.2s ease;
+}
+body.dark-mode .footer-nav ul li a {
+  color: #8b949e;
+}
+.footer-nav ul li a:hover {
+  color: #1977cc;
+  text-decoration: none;
+}
+body.dark-mode .footer-nav ul li a:hover {
+  color: #58a6ff;
+}
+.footer-dev-links {
+  margin-top: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  justify-content: center;
+  align-items: center;
+}
+.footer-dev-links a {
+  color: #1977cc;
+  background: #f4f8fb;
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-size: 1rem;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(44, 73, 100, 0.07);
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  border: 1px solid #e6e9ef;
+}
+.footer-dev-links a:hover {
+  background: #e6f0fa;
+  color: #125a9c;
+  text-decoration: none;
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 4px 16px rgba(25, 119, 204, 0.10);
+}
+.footer-copyright {
+  margin-top: 18px;
+}
+.text-muted {
+  color: #6c757d;
+}
+.fw-bold {
+  font-weight: 700;
+}
+.text-dark {
+  color: #2c4964;
+}
+.text-decoration-none {
+  text-decoration: none;
+}
+@media (max-width: 768px) {
+  .footer {
+    padding: 12px 15px;
+    margin-top: 15px;
+  }
+  .footer-nav ul {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .footer-dev-links {
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+  }
+  .footer-dev-links a {
+    justify-content: center;
+    width: 100%;
+    font-size: 0.98rem;
+    padding: 10px 0;
+  }
+}
