@@ -1347,19 +1347,19 @@
             const closeBtn = document.getElementById('close-chatbot');
 
             function openChatbot() {
-                popup.classList.add('show');
+                popup.classList.add('open');
                 toggler.classList.add('active');
             }
 
             function closeChatbot() {
-                popup.classList.remove('show');
+                popup.classList.remove('open');
                 toggler.classList.remove('active');
             }
 
             // Toggle on button click
             toggler.addEventListener('click', function(e) {
                 e.stopPropagation();
-                if (popup.classList.contains('show')) {
+                if (popup.classList.contains('open')) {
                     closeChatbot();
                 } else {
                     openChatbot();
@@ -1497,7 +1497,7 @@
         <!-- Copyright -->
         <div class="footer-copyright">
           <small class="text-muted">
-            &copy; <span id="year"></span> MediQ. All rights reserved. | Built by❤️
+            &copy; <span id="year"></span> Binary-Explorers. All rights reserved. | Built by❤️
             <a href="https://github.com/Binary-Explorers" target="_blank" rel="noopener noreferrer" class="text-decoration-none text-dark fw-bold">
               Binary Explorers
             </a>
