@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo List</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style>
         .container { max-width: 600px; margin: 0 auto; padding: 20px; }
         .task-list { list-style: none; padding: 0; }
@@ -29,7 +28,7 @@
         <h1>Todo List</h1>
         <div id="errorMessage" class="error"></div>
         <form id="addTaskForm" action="{{ url_for('create_task') }}" method="POST">
-            <input type="text" name="task" placeholder="Enter a task" required>
+            <input type="text" name="title" placeholder="Enter a task" required>
             <select name="priority" required>
                 <option value="high">High Priority</option>
                 <option value="medium" selected>Medium Priority</option>
@@ -144,6 +143,29 @@
             document.querySelectorAll('form').forEach(form => {
                 form.addEventListener('submit', function() {
                     this.querySelector('button').disabled = true;
+                });
+            });
+
+            // Add new form submission handler
+            document.getElementById('addTaskForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const form = this;
+                const formData = new FormData(form);
+                
+                fetch(form.action, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => {
+                    if (!response.ok) throw new Error('Failed to add task');
+                    return response.json();
+                })
+                .then(() => {
+                    window.location.reload();
+                })
+                .catch(error => {
+                    showError('Failed to add task');
+                    form.querySelector('button').disabled = false;
                 });
             });
         });
