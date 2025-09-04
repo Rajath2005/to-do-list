@@ -112,7 +112,8 @@
 }
 
 .message-input {
-  flex: 1;
+  flex: 1 1 auto;     /* allow growth but prevent shrinking */
+  min-width: 0;       /* required inside flexbox to avoid overflow shrinking */
   resize: none;
   border-radius: 8px;
   border: 1px solid #eee;
@@ -132,6 +133,7 @@
   align-items: center;
   gap: 10px;
   margin-left: 10px;
+  flex-shrink: 0;     /* buttons don’t force input to shrink */
 }
 
 .chat-controls button {

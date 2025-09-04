@@ -1,3 +1,11 @@
+# How to access the API key in your Flask app:
+# In your Python code, use the os module to read the environment variable, for example:
+#
+# import os
+# api_key = os.getenv('API_KEY')
+#
+# This way, your app dynamically reads the key at runtime without exposing it in code or repository.
+
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from werkzeug.exceptions import BadRequest
 from models.todo import Todo
