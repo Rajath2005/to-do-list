@@ -174,6 +174,29 @@ def handle_server_error(e):
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         return jsonify({'success': False, 'error': 'Internal server error'}), 500
     return render_template('500.html'), 500
+# ...existing code...
+@app.route('/chat', methods=['POST'])
+def chat():
+    try:
+        data = request.get_json()
+        user_message = data.get('message', '').strip()
+        
+        if not user_message:
+            return jsonify({'success': False, 'error': 'Message is required'}), 400
+            
+        # For now, just echo back a simple response
+        # You can integrate a more sophisticated chat logic here later
+        response = f"You said: {user_message}"
+        
+        return jsonify({
+            'success': True,
+            'response': response
+        })
+        
+    except Exception as e:
+        return jsonify({'success': False, 'error': 'Failed to process message'}), 500
+
+# ...existing code...
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
