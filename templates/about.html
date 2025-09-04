@@ -3,21 +3,328 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About - Todo List</title>
+    <title>About - Enhanced Todo List</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    
+    <!-- Custom CSS (inline for demo) -->
     <style>
-        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-        .nav { margin-bottom: 20px; }
-        .nav a { margin-right: 10px; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            margin: 0;
+        }
+        
+        .nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .nav a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            margin: 0 0.25rem;
+            color: #374151;
+            font-weight: 500;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .nav a:hover {
+            background: #6366f1;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .about-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .about-header {
+            background: linear-gradient(45deg, #6366f1, #8b5cf6);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        
+        .about-content {
+            padding: 3rem 2rem;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .feature-card {
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 4px solid #6366f1;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-icon {
+            background: #6366f1;
+            color: white;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .tech-badge {
+            background: linear-gradient(45deg, #6366f1, #8b5cf6);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        @media (max-width: 768px) {
+            .about-header {
+                padding: 2rem 1rem;
+            }
+            
+            .about-content {
+                padding: 2rem 1rem;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
     </style>
 </head>
+
 <body>
-    <div class="container">
-        <div class="nav">
-            <a href="{{ url_for('index') }}">Home</a>
-            <a href="{{ url_for('about') }}">About</a>
+    <div class="nav">
+        <div class="nav-container">
+            <a href="/" class="animate__animated animate__fadeIn">
+                <i class="material-icons">home</i> Home
+            </a>
+            <a href="/about" class="animate__animated animate__fadeIn">
+                <i class="material-icons">info</i> About
+            </a>
         </div>
-        <h1>About Todo List</h1>
-        <p>This is a simple todo list application built with Flask.</p>
     </div>
+
+    <div class="container">
+        <div class="about-card animate__animated animate__fadeInUp">
+            <div class="about-header">
+                <h1 class="display-4">
+                    <i class="material-icons" style="font-size: 3rem;">info</i><br>
+                    About Enhanced Todo List
+                </h1>
+                <p class="lead">A modern, feature-rich task management application built with Flask and enhanced UX.</p>
+            </div>
+            
+            <div class="about-content">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h2><i class="material-icons">description</i> Overview</h2>
+                        <p class="lead">
+                            Enhanced Todo List is a comprehensive task management application that combines 
+                            beautiful design with powerful functionality. Built with modern web technologies, 
+                            it offers an intuitive interface for managing your daily tasks efficiently.
+                        </p>
+                        
+                        <h3><i class="material-icons">star</i> Key Features</h3>
+                        <div class="feature-grid">
+                            <div class="feature-card animate__animated animate__fadeInLeft">
+                                <div class="feature-icon">
+                                    <i class="material-icons">task_alt</i>
+                                </div>
+                                <h5>Smart Task Management</h5>
+                                <p>Create, edit, and organize tasks with priorities, categories, and due dates.</p>
+                            </div>
+                            
+                            <div class="feature-card animate__animated animate__fadeInRight">
+                                <div class="feature-icon">
+                                    <i class="material-icons">filter_list</i>
+                                </div>
+                                <h5>Advanced Filtering</h5>
+                                <p>Filter and sort tasks by status, priority, category, or search by keywords.</p>
+                            </div>
+                            
+                            <div class="feature-card animate__animated animate__fadeInLeft">
+                                <div class="feature-icon">
+                                    <i class="material-icons">analytics</i>
+                                </div>
+                                <h5>Progress Analytics</h5>
+                                <p>Track your productivity with completion rates and task statistics.</p>
+                            </div>
+                            
+                            <div class="feature-card animate__animated animate__fadeInRight">
+                                <div class="feature-icon">
+                                    <i class="material-icons">select_all</i>
+                                </div>
+                                <h5>Bulk Operations</h5>
+                                <p>Select multiple tasks for bulk deletion or batch operations.</p>
+                            </div>
+                            
+                            <div class="feature-card animate__animated animate__fadeInLeft">
+                                <div class="feature-icon">
+                                    <i class="material-icons">save</i>
+                                </div>
+                                <h5>Persistent Storage</h5>
+                                <p>Your tasks are automatically saved to a JSON file for data persistence.</p>
+                            </div>
+                            
+                            <div class="feature-card animate__animated animate__fadeInRight">
+                                <div class="feature-icon">
+                                    <i class="material-icons">phone_android</i>
+                                </div>
+                                <h5>Responsive Design</h5>
+                                <p>Works perfectly on desktop, tablet, and mobile devices.</p>
+                            </div>
+                        </div>
+                        
+                        <h3><i class="material-icons">build</i> Technology Stack</h3>
+                        <div class="tech-stack">
+                            <span class="tech-badge">Python 3.8+</span>
+                            <span class="tech-badge">Flask</span>
+                            <span class="tech-badge">Bootstrap 5</span>
+                            <span class="tech-badge">JavaScript ES6+</span>
+                            <span class="tech-badge">Material Icons</span>
+                            <span class="tech-badge">Animate.css</span>
+                            <span class="tech-badge">JSON Storage</span>
+                            <span class="tech-badge">Responsive CSS</span>
+                        </div>
+                        
+                        <h3><i class="material-icons">new_releases</i> What's New</h3>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <strong>Enhanced UI/UX:</strong> Modern glass morphism design with smooth animations
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Task Categories:</strong> Organize tasks by Work, Personal, Shopping, Health, etc.
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Due Dates:</strong> Set and track task deadlines
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Task Notes:</strong> Add detailed descriptions to your tasks
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Search Functionality:</strong> Quickly find tasks by title or notes
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Bulk Actions:</strong> Select and manage multiple tasks at once
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Real-time Statistics:</strong> Monitor your productivity metrics
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Keyboard Shortcuts:</strong> Ctrl+A to select all, Delete to remove selected
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header bg-primary text-white">
+                                <h5><i class="material-icons">code</i> Development Info</h5>
+                            </div>
+                            <div class="card-body">
+                                <p><strong>Version:</strong> 2.0.0</p>
+                                <p><strong>License:</strong> MIT</p>
+                                <p><strong>Author:</strong> Enhanced Todo Team</p>
+                                <p><strong>Last Updated:</strong> September 2025</p>
+                                
+                                <hr>
+                                
+                                <h6><i class="material-icons">bug_report</i> Bug Reports</h6>
+                                <p class="small text-muted">
+                                    Found a bug? Please report it through the feedback system 
+                                    or contact our development team.
+                                </p>
+                                
+                                <h6><i class="material-icons">lightbulb</i> Feature Requests</h6>
+                                <p class="small text-muted">
+                                    Have an idea for a new feature? We'd love to hear from you!
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="card mt-3">
+                            <div class="card-header bg-success text-white">
+                                <h5><i class="material-icons">tips_and_updates</i> Quick Tips</h5>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-unstyled">
+                                    <li><strong>Double-click</strong> task text to edit</li>
+                                    <li><strong>Use categories</strong> to organize tasks</li>
+                                    <li><strong>Set due dates</strong> for better planning</li>
+                                    <li><strong>Search</strong> to find tasks quickly</li>
+                                    <li><strong>Ctrl+A</strong> to select all tasks</li>
+                                    <li><strong>Delete key</strong> to remove selected</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <a href="/" class="btn btn-primary btn-lg">
+                        <i class="material-icons">arrow_back</i> Back to Todo List
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

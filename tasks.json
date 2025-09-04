@@ -1,0 +1,15 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "title": "launch-break",
+      "completed": false,
+      "priority": "medium",
+      "category": "general",
+      "created_at": "2025-09-04T12:33:29.801317",
+      "due_date": null,
+      "notes": ""
+    }
+  ],
+  "next_id": 2
+}

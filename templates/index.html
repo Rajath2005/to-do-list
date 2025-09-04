@@ -3,170 +3,975 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todo List</title>
+    <title>Enhanced Todo List</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    
     <style>
-        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-        .task-list { list-style: none; padding: 0; }
-        .task-item { display: flex; align-items: center; margin: 10px 0; padding: 10px; border: 1px solid #ddd; }
-        .task-text { margin: 0 10px; flex-grow: 1; }
-        .task-checkbox { margin-right: 10px; }
-        .error { color: red; display: none; margin: 10px 0; }
-        .completed { text-decoration: line-through; color: #666; }
-        .nav { margin-bottom: 20px; }
-        .nav a { margin-right: 10px; }
-        .priority-high { border-left: 4px solid #ff4444; }
-        .priority-medium { border-left: 4px solid #ffbb33; }
-        .priority-low { border-left: 4px solid #00C851; }
+        :root {
+            --primary-color: #6366f1;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        .nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .nav a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            margin: 0 0.25rem;
+            color: var(--gray-700);
+            font-weight: 500;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .nav a:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .main-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .card-header {
+            background: linear-gradient(45deg, var(--primary-color), #8b5cf6);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .card-body {
+            padding: 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .controls-section {
+            background: var(--gray-100);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .task-form {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr auto;
+            gap: 1rem;
+            align-items: end;
+        }
+
+        @media (max-width: 768px) {
+            .task-form {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .btn-modern {
+            background: linear-gradient(45deg, var(--primary-color), #8b5cf6);
+            border: none;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-modern:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            color: white;
+        }
+
+        .task-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .task-item {
+            background: white;
+            border: 1px solid var(--gray-200);
+            border-radius: 15px;
+            margin-bottom: 1rem;
+            padding: 1.5rem;
+            display: grid;
+            grid-template-columns: auto 1fr auto auto auto auto;
+            gap: 1rem;
+            align-items: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .task-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .priority-high::before { background: var(--danger-color); }
+        .priority-medium::before { background: var(--warning-color); }
+        .priority-low::before { background: var(--success-color); }
+
+        .task-item:hover {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .task-checkbox {
+            width: 1.25rem;
+            height: 1.25rem;
+            cursor: pointer;
+        }
+
+        .task-text {
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .task-text.completed {
+            text-decoration: line-through;
+            color: var(--gray-400);
+        }
+
+        .task-meta {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.25rem;
+        }
+
+        .priority-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .priority-high { background: rgba(239, 68, 68, 0.1); color: var(--danger-color); }
+        .priority-medium { background: rgba(245, 158, 11, 0.1); color: var(--warning-color); }
+        .priority-low { background: rgba(16, 185, 129, 0.1); color: var(--success-color); }
+
+        .category-badge {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary-color);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .btn-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-edit { background: rgba(59, 130, 246, 0.1); color: #3b82f6; }
+        .btn-delete { background: rgba(239, 68, 68, 0.1); color: var(--danger-color); }
+
+        .btn-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            align-items: center;
+        }
+
+        .search-box {
+            position: relative;
+            flex-grow: 1;
+            min-width: 250px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 3rem;
+            border: 1px solid var(--gray-300);
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-400);
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--gray-300);
+            background: white;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.875rem;
+        }
+
+        .filter-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .bulk-actions {
+            background: var(--gray-100);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .bulk-actions.show {
+            display: block;
+        }
+
+        .error, .success {
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .error {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger-color);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .success {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success-color);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .modal {
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            border-radius: 15px;
+            border: none;
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .floating-add {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, var(--primary-color), #8b5cf6);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .floating-add:hover {
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            .task-item {
+                grid-template-columns: auto 1fr;
+                gap: 0.5rem;
+            }
+            
+            .task-meta {
+                grid-column: 1 / -1;
+                flex-direction: row;
+                justify-content: space-between;
+                margin-top: 1rem;
+                padding-top: 1rem;
+                border-top: 1px solid var(--gray-200);
+            }
+        }
     </style>
 </head>
+
 <body>
-    <div class="container">
-        <div class="nav">
-            <a href="{{ url_for('index') }}">Home</a>
-            <a href="{{ url_for('about') }}">About</a>
+    <div class="nav">
+        <div class="nav-container">
+            <a href="/" class="animate__animated animate__fadeIn">
+                <i class="material-icons">home</i> Home
+            </a>
+            <a href="/about" class="animate__animated animate__fadeIn">
+                <i class="material-icons">info</i> About
+            </a>
         </div>
-        <h1>Todo List</h1>
-        <div id="errorMessage" class="error"></div>
-        <form id="addTaskForm" action="{{ url_for('create_task') }}" method="POST">
-            <input type="text" name="title" placeholder="Enter a task" required>
-            <select name="priority" required>
-                <option value="high">High Priority</option>
-                <option value="medium" selected>Medium Priority</option>
-                <option value="low">Low Priority</option>
-            </select>
-            <button type="submit">Add Task</button>
-        </form>
-        <ul class="task-list">
-            {% for task in tasks %}
-            <li class="task-item priority-{{ task.priority }}" data-task-id="{{ task.id }}">
-                <input type="checkbox" class="task-checkbox" 
-                    {% if task.completed %}checked{% endif %}>
-                <span class="task-text {% if task.completed %}completed{% endif %}">
-                    {{ task.title }}
-                </span>
-                <select class="priority-select" onchange="updatePriority({{ task.id }}, this.value)">
-                    <option value="high" {% if task.priority == 'high' %}selected{% endif %}>High</option>
-                    <option value="medium" {% if task.priority == 'medium' %}selected{% endif %}>Medium</option>
-                    <option value="low" {% if task.priority == 'low' %}selected{% endif %}>Low</option>
-                </select>
-                <form class="delete-form" method="POST" 
-                    action="{{ url_for('delete_task', task_id=task.id) }}">
-                    <button type="submit" class="delete-btn">Delete</button>
-                </form>
-            </li>
-            {% endfor %}
-        </ul>
     </div>
+
+    <div class="container">
+        <div class="main-card animate__animated animate__fadeInUp">
+            <div class="card-header">
+                <h1><i class="material-icons">check_circle</i> Enhanced Todo List</h1>
+            </div>
+            
+            <div class="card-body">
+                <!-- Statistics -->
+                <div class="stats-grid">
+                    <div class="stat-card animate__animated animate__fadeIn">
+                        <div class="stat-number">{{ stats.total }}</div>
+                        <div>Total Tasks</div>
+                    </div>
+                    <div class="stat-card animate__animated animate__fadeIn" style="animation-delay: 0.1s;">
+                        <div class="stat-number">{{ stats.completed }}</div>
+                        <div>Completed</div>
+                    </div>
+                    <div class="stat-card animate__animated animate__fadeIn" style="animation-delay: 0.2s;">
+                        <div class="stat-number">{{ stats.pending }}</div>
+                        <div>Pending</div>
+                    </div>
+                    <div class="stat-card animate__animated animate__fadeIn" style="animation-delay: 0.3s;">
+                        <div class="stat-number">{{ "%.0f"|format(stats.completion_rate) }}%</div>
+                        <div>Completion Rate</div>
+                    </div>
+                </div>
+
+                <!-- Messages -->
+                <div id="errorMessage" class="error"></div>
+                <div id="successMessage" class="success"></div>
+
+                <!-- Controls -->
+                <div class="controls-section">
+                    <h5><i class="material-icons">add_task</i> Add New Task</h5>
+                    <form id="addTaskForm" class="task-form">
+                        <div class="form-group">
+                            <input type="text" name="title" placeholder="Enter task title..." required 
+                                   class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <select name="priority" class="form-select">
+                                <option value="high">High Priority</option>
+                                <option value="medium" selected>Medium Priority</option>
+                                <option value="low">Low Priority</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select name="category" class="form-select">
+                                <option value="general">General</option>
+                                <option value="work">Work</option>
+                                <option value="personal">Personal</option>
+                                <option value="shopping">Shopping</option>
+                                <option value="health">Health</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="date" name="due_date" class="form-control" 
+                                   min="{{ today }}">
+                        </div>
+                        <button type="submit" class="btn-modern">
+                            <i class="material-icons">add</i> Add Task
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Filter and Search -->
+                <div class="filter-bar">
+                    <div class="search-box">
+                        <i class="material-icons search-icon">search</i>
+                        <input type="text" id="searchInput" class="search-input" 
+                               placeholder="Search tasks..." value="{{ search_query }}">
+                    </div>
+                    <div class="filter-buttons">
+                        <button class="filter-btn {{ 'active' if not current_filter else '' }}" data-filter="">All</button>
+                        <button class="filter-btn {{ 'active' if current_filter == 'pending' else '' }}" data-filter="pending">Pending</button>
+                        <button class="filter-btn {{ 'active' if current_filter == 'completed' else '' }}" data-filter="completed">Completed</button>
+                        <button class="filter-btn {{ 'active' if current_filter == 'high' else '' }}" data-filter="high">High Priority</button>
+                        <select class="form-select" id="sortSelect" style="width: auto;">
+                            <option value="priority" {{ 'selected' if current_sort == 'priority' else '' }}>Sort by Priority</option>
+                            <option value="created_at" {{ 'selected' if current_sort == 'created_at' else '' }}>Sort by Date</option>
+                            <option value="title" {{ 'selected' if current_sort == 'title' else '' }}>Sort by Title</option>
+                            <option value="due_date" {{ 'selected' if current_sort == 'due_date' else '' }}>Sort by Due Date</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Bulk Actions -->
+                <div id="bulkActions" class="bulk-actions">
+                    <div class="d-flex align-items-center gap-3">
+                        <span><strong id="selectedCount">0</strong> tasks selected</span>
+                        <button class="btn btn-sm btn-danger" id="bulkDeleteBtn">
+                            <i class="material-icons">delete</i> Delete Selected
+                        </button>
+                        <button class="btn btn-sm btn-secondary" id="clearSelectionBtn">
+                            <i class="material-icons">clear</i> Clear Selection
+                        </button>
+                        <button class="btn btn-sm btn-warning" id="clearCompletedBtn">
+                            <i class="material-icons">clear_all</i> Clear Completed
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Task List -->
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5><i class="material-icons">list</i> Tasks ({{ tasks|length }})</h5>
+                    <div>
+                        <button class="btn btn-sm btn-outline-primary" id="selectAllBtn">
+                            <i class="material-icons">select_all</i> Select All
+                        </button>
+                    </div>
+                </div>
+
+                <ul class="task-list">
+                    {% for task in tasks %}
+                    <li class="task-item priority-{{ task.priority }} animate__animated animate__fadeIn" 
+                        data-task-id="{{ task.id }}">
+                        <input type="checkbox" class="task-select-checkbox form-check-input">
+                        <input type="checkbox" class="task-checkbox form-check-input" 
+                            {% if task.completed %}checked{% endif %}>
+                        
+                        <div class="task-content">
+                            <div class="task-text {% if task.completed %}completed{% endif %}">
+                                {{ task.title }}
+                            </div>
+                            {% if task.notes %}
+                            <div class="task-notes">{{ task.notes }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="task-meta">
+                            <span class="priority-badge priority-{{ task.priority }}">
+                                {{ task.priority }}
+                            </span>
+                            <span class="category-badge">{{ task.category or 'general' }}</span>
+                            {% if task.due_date %}
+                            <small class="text-muted">
+                                <i class="material-icons" style="font-size: 14px;">schedule</i>
+                                {{ task.due_date }}
+                            </small>
+                            {% endif %}
+                        </div>
+
+                        <button class="btn-icon btn-edit" onclick="editTask({{ task.id }})">
+                            <i class="material-icons">edit</i>
+                        </button>
+
+                        <button class="btn-icon btn-delete" onclick="deleteTask({{ task.id }})">
+                            <i class="material-icons">delete</i>
+                        </button>
+                    </li>
+                    {% else %}
+                    <li class="text-center py-5">
+                        <i class="material-icons" style="font-size: 4rem; color: #ccc;">task_alt</i>
+                        <p class="text-muted mt-3">
+                            {% if search_query %}
+                                No tasks found for "{{ search_query }}"
+                            {% elif current_filter %}
+                                No {{ current_filter }} tasks found
+                            {% else %}
+                                No tasks yet. Create your first task!
+                            {% endif %}
+                        </p>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Task Modal -->
+    <div class="modal fade" id="editTaskModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Task</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editTaskForm">
+                        <input type="hidden" id="editTaskId">
+                        <div class="mb-3">
+                            <label class="form-label">Title</label>
+                            <input type="text" id="editTitle" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Priority</label>
+                            <select id="editPriority" class="form-select">
+                                <option value="high">High Priority</option>
+                                <option value="medium">Medium Priority</option>
+                                <option value="low">Low Priority</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Category</label>
+                            <select id="editCategory" class="form-select">
+                                <option value="general">General</option>
+                                <option value="work">Work</option>
+                                <option value="personal">Personal</option>
+                                <option value="shopping">Shopping</option>
+                                <option value="health">Health</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Due Date</label>
+                            <input type="date" id="editDueDate" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Notes</label>
+                            <textarea id="editNotes" class="form-control" rows="3" 
+                                      placeholder="Add notes or details..."></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="saveTaskBtn">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Add Button -->
+    <button class="floating-add d-md-none" onclick="$('#addTaskForm input[name=title]').focus()">
+        <i class="material-icons">add</i>
+    </button>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
     <script>
-        function showError(message) {
-            const errorDiv = document.getElementById('errorMessage');
-            errorDiv.textContent = message;
-            errorDiv.style.display = 'block';
-            setTimeout(() => errorDiv.style.display = 'none', 3000);
+        let selectedTasks = new Set();
+        const editModal = new bootstrap.Modal(document.getElementById('editTaskModal'));
+
+        // Utility functions
+        function showMessage(message, type = 'success') {
+            const messageDiv = document.getElementById(type + 'Message');
+            messageDiv.textContent = message;
+            messageDiv.style.display = 'block';
+            messageDiv.classList.add('animate__animated', 'animate__fadeIn');
+            
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+                messageDiv.classList.remove('animate__animated', 'animate__fadeIn');
+            }, 4000);
         }
 
-        function updateTask(taskId, completed, element) {
-            const taskText = element.parentElement.querySelector('.task-text');
+        function showError(message) {
+            showMessage(message, 'error');
+        }
+
+        function showSuccess(message) {
+            showMessage(message, 'success');
+        }
+
+        // Task operations
+        function updateTask(taskId, data, element = null) {
             fetch(`/tasks/${taskId}`, {
                 method: 'PUT',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({completed: completed})
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: JSON.stringify(data)
             })
-            .then(response => {
-                if (!response.ok) throw new Error('Failed to update task');
-                return response.json();
-            })
-            .then(() => {
-                taskText.classList.toggle('completed', completed);
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    if (data.completed !== undefined && element) {
+                        const taskText = element.parentElement.querySelector('.task-text');
+                        taskText.classList.toggle('completed', data.completed);
+                    }
+                    showSuccess('Task updated successfully');
+                } else {
+                    throw new Error(result.error || 'Failed to update task');
+                }
             })
             .catch(error => {
-                showError('Failed to update task');
-                element.checked = !completed; // revert checkbox
+                showError(error.message);
+                if (element && data.completed !== undefined) {
+                    element.checked = !data.completed;
+                }
             });
         }
 
-        function updatePriority(taskId, priority) {
+        function deleteTask(taskId) {
+            if (!confirm('Are you sure you want to delete this task?')) return;
+            
             fetch(`/tasks/${taskId}`, {
-                method: 'PUT',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({priority: priority})
+                method: 'DELETE',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
             })
-            .then(response => {
-                if (!response.ok) throw new Error('Failed to update priority');
-                return response.json();
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    const taskItem = document.querySelector(`[data-task-id="${taskId}"]`);
+                    taskItem.classList.add('animate__animated', 'animate__fadeOut');
+                    setTimeout(() => {
+                        taskItem.remove();
+                        updateStats();
+                    }, 500);
+                    showSuccess('Task deleted successfully');
+                } else {
+                    throw new Error(result.error || 'Failed to delete task');
+                }
             })
-            .then(() => {
-                const taskItem = document.querySelector(`[data-task-id="${taskId}"]`);
-                taskItem.className = `task-item priority-${priority}`;
-            })
-            .catch(error => showError('Failed to update priority'));
+            .catch(error => showError(error.message));
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            // Handle checkbox changes
-            document.querySelectorAll('.task-checkbox').forEach(checkbox => {
-                checkbox.addEventListener('change', function() {
-                    updateTask(this.parentElement.dataset.taskId, this.checked, this);
-                });
-            });
+        function editTask(taskId) {
+            fetch(`/tasks/${taskId}/details`)
+                .then(response => response.json())
+                .then(result => {
+                    if (result.success) {
+                        const task = result.task;
+                        document.getElementById('editTaskId').value = task.id;
+                        document.getElementById('editTitle').value = task.title;
+                        document.getElementById('editPriority').value = task.priority;
+                        document.getElementById('editCategory').value = task.category || 'general';
+                        document.getElementById('editDueDate').value = task.due_date || '';
+                        document.getElementById('editNotes').value = task.notes || '';
+                        editModal.show();
+                    } else {
+                        showError('Failed to load task details');
+                    }
+                })
+                .catch(error => showError('Failed to load task details'));
+        }
 
-            // Handle task text double-click
-            document.querySelectorAll('.task-text').forEach(item => {
-                item.addEventListener('dblclick', function() {
-                    const taskId = this.parentElement.dataset.taskId;
-                    const currentText = this.textContent.trim();
-                    const newTitle = prompt('Edit task:', currentText);
-                    
-                    if (newTitle && newTitle !== currentText) {
-                        this.textContent = 'Updating...';
-                        fetch(`/tasks/${taskId}`, {
-                            method: 'PUT',
-                            headers: {'Content-Type': 'application/json'},
-                            body: JSON.stringify({title: newTitle})
-                        })
-                        .then(response => {
-                            if (!response.ok) throw new Error('Failed to update task');
-                            return response.json();
-                        })
-                        .then(() => {
-                            this.textContent = newTitle;
-                        })
-                        .catch(error => {
-                            this.textContent = currentText;
-                            showError('Failed to update task');
-                        });
+        // Bulk operations
+        function updateBulkActions() {
+            const bulkActions = document.getElementById('bulkActions');
+            const selectedCount = document.getElementById('selectedCount');
+            
+            selectedCount.textContent = selectedTasks.size;
+            
+            if (selectedTasks.size > 0) {
+                bulkActions.classList.add('show');
+            } else {
+                bulkActions.classList.remove('show');
+            }
+        }
+
+        function selectAllTasks() {
+            const checkboxes = document.querySelectorAll('.task-select-checkbox');
+            const allSelected = checkboxes.length > 0 && Array.from(checkboxes).every(cb => cb.checked);
+            
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = !allSelected;
+                const taskId = parseInt(checkbox.closest('.task-item').dataset.taskId);
+                if (!allSelected) {
+                    selectedTasks.add(taskId);
+                } else {
+                    selectedTasks.delete(taskId);
+                }
+            });
+            
+            updateBulkActions();
+        }
+
+        function bulkDeleteTasks() {
+            if (selectedTasks.size === 0) return;
+            
+            if (!confirm(`Are you sure you want to delete ${selectedTasks.size} selected tasks?`)) return;
+            
+            fetch('/tasks/bulk-delete', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: JSON.stringify({task_ids: Array.from(selectedTasks)})
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    selectedTasks.forEach(taskId => {
+                        const taskItem = document.querySelector(`[data-task-id="${taskId}"]`);
+                        if (taskItem) {
+                            taskItem.classList.add('animate__animated', 'animate__fadeOut');
+                            setTimeout(() => taskItem.remove(), 500);
+                        }
+                    });
+                    selectedTasks.clear();
+                    updateBulkActions();
+                    updateStats();
+                    showSuccess(result.message);
+                } else {
+                    showError(result.error || 'Failed to delete tasks');
+                }
+            })
+            .catch(error => showError('Failed to delete tasks'));
+        }
+
+        function clearCompletedTasks() {
+            if (!confirm('Are you sure you want to delete all completed tasks?')) return;
+            
+            fetch('/tasks/clear-completed', {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    if (result.deleted_count > 0) {
+                        setTimeout(() => window.location.reload(), 1000);
+                        showSuccess(result.message);
+                    } else {
+                        showSuccess('No completed tasks to delete');
+                    }
+                } else {
+                    showError(result.error || 'Failed to clear completed tasks');
+                }
+            })
+            .catch(error => showError('Failed to clear completed tasks'));
+        }
+
+        function updateStats() {
+            fetch('/api/stats')
+                .then(response => response.json())
+                .then(stats => {
+                    const statNumbers = document.querySelectorAll('.stat-number');
+                    if (statNumbers.length >= 4) {
+                        statNumbers[0].textContent = stats.total;
+                        statNumbers[1].textContent = stats.completed;
+                        statNumbers[2].textContent = stats.pending;
+                        statNumbers[3].textContent = Math.round(stats.completion_rate) + '%';
                     }
                 });
-            });
+        }
 
-            // Prevent double form submission
-            document.querySelectorAll('form').forEach(form => {
-                form.addEventListener('submit', function() {
-                    this.querySelector('button').disabled = true;
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Task completion checkboxes
+            document.querySelectorAll('.task-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const taskId = parseInt(this.closest('.task-item').dataset.taskId);
+                    updateTask(taskId, {completed: this.checked}, this);
                 });
             });
 
-            // Add new form submission handler
+            // Task selection checkboxes
+            document.querySelectorAll('.task-select-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const taskId = parseInt(this.closest('.task-item').dataset.taskId);
+                    if (this.checked) {
+                        selectedTasks.add(taskId);
+                    } else {
+                        selectedTasks.delete(taskId);
+                    }
+                    updateBulkActions();
+                });
+            });
+
+            // Task text editing
+            document.querySelectorAll('.task-text').forEach(item => {
+                item.addEventListener('dblclick', function() {
+                    const taskId = parseInt(this.closest('.task-item').dataset.taskId);
+                    editTask(taskId);
+                });
+            });
+
+            // Add task form
             document.getElementById('addTaskForm').addEventListener('submit', function(e) {
                 e.preventDefault();
-                const form = this;
-                const formData = new FormData(form);
+                const formData = new FormData(this);
+                const button = this.querySelector('button');
+                button.disabled = true;
                 
-                fetch(form.action, {
+                fetch('/tasks', {
                     method: 'POST',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
                     body: formData
                 })
-                .then(response => {
-                    if (!response.ok) throw new Error('Failed to add task');
-                    return response.json();
-                })
-                .then(() => {
-                    window.location.reload();
+                .then(response => response.json())
+                .then(result => {
+                    if (result.success) {
+                        window.location.reload();
+                    } else {
+                        throw new Error(result.error || 'Failed to add task');
+                    }
                 })
                 .catch(error => {
-                    showError('Failed to add task');
-                    form.querySelector('button').disabled = false;
+                    showError(error.message);
+                    button.disabled = false;
                 });
+            });
+
+            // Edit task form
+            document.getElementById('saveTaskBtn').addEventListener('click', function() {
+                const taskId = document.getElementById('editTaskId').value;
+                const data = {
+                    title: document.getElementById('editTitle').value,
+                    priority: document.getElementById('editPriority').value,
+                    category: document.getElementById('editCategory').value,
+                    due_date: document.getElementById('editDueDate').value || null,
+                    notes: document.getElementById('editNotes').value
+                };
+                
+                updateTask(taskId, data);
+                editModal.hide();
+                setTimeout(() => window.location.reload(), 500);
+            });
+
+            // Search functionality
+            let searchTimeout;
+            document.getElementById('searchInput').addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    const query = this.value.trim();
+                    const url = new URL(window.location);
+                    if (query) {
+                        url.searchParams.set('search', query);
+                    } else {
+                        url.searchParams.delete('search');
+                    }
+                    window.location.href = url.toString();
+                }, 500);
+            });
+
+            // Filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const filter = this.dataset.filter;
+                    const url = new URL(window.location);
+                    if (filter) {
+                        url.searchParams.set('filter', filter);
+                    } else {
+                        url.searchParams.delete('filter');
+                    }
+                    window.location.href = url.toString();
+                });
+            });
+
+            // Sort dropdown
+            document.getElementById('sortSelect').addEventListener('change', function() {
+                const sort = this.value;
+                const url = new URL(window.location);
+                url.searchParams.set('sort', sort);
+                window.location.href = url.toString();
+            });
+
+            // Bulk action buttons
+            document.getElementById('selectAllBtn').addEventListener('click', selectAllTasks);
+            document.getElementById('bulkDeleteBtn').addEventListener('click', bulkDeleteTasks);
+            document.getElementById('clearCompletedBtn').addEventListener('click', clearCompletedTasks);
+            document.getElementById('clearSelectionBtn').addEventListener('click', function() {
+                selectedTasks.clear();
+                document.querySelectorAll('.task-select-checkbox').forEach(cb => cb.checked = false);
+                updateBulkActions();
+            });
+
+            // Keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                if (e.ctrlKey && e.key === 'a') {
+                    e.preventDefault();
+                    selectAllTasks();
+                } else if (e.key === 'Delete' && selectedTasks.size > 0) {
+                    bulkDeleteTasks();
+                }
             });
         });
     </script>

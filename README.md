@@ -1,17 +1,216 @@
-<<<<<<< HEAD
-# Flask Todo List Application
+# Enhanced Todo List Application
 
-A simple todo list application built with Flask.
+A modern, feature-rich task management application built with Flask and enhanced UX.
 
-## Features
-- Create, read, update and delete tasks
-- Set priority levels for tasks
-- Mark tasks as complete
+![Todo App Screenshot](https://via.placeholder.com/800x400/6366f1/ffffff?text=Enhanced+Todo+List)
 
-## Setup
-1. Clone the repository
-2. Install dependencies
-3. Run `python app.py`
-=======
-# to-do-list
->>>>>>> d0d57e5ad77c1f5c68c4d51ca98703dfd11b02d9
+## 🚀 Features
+
+- ✅ **Smart Task Management** - Create, edit, and organize tasks with priorities and categories
+- 🔍 **Advanced Search & Filtering** - Find tasks quickly by title, category, priority, or status  
+- 📊 **Progress Analytics** - Track productivity with completion rates and statistics
+- 📱 **Responsive Design** - Works perfectly on desktop, tablet, and mobile
+- 🎨 **Modern UI** - Glass morphism design with smooth animations
+- 💾 **Persistent Storage** - Tasks automatically saved to JSON file
+- ⌨️ **Keyboard Shortcuts** - Ctrl+A to select all, Delete to remove selected
+- 📝 **Task Notes** - Add detailed descriptions to tasks
+- 📅 **Due Dates** - Set and track task deadlines
+- 🗂️ **Categories** - Organize tasks (Work, Personal, Shopping, Health, etc.)
+- 🎯 **Priority Levels** - High, Medium, Low priority system
+- 🔄 **Bulk Operations** - Select multiple tasks for batch actions
+
+## 📋 Requirements
+
+- Python 3.8 or higher
+- Flask and dependencies (see requirements.txt)
+
+## 🛠️ Installation
+
+1. **Clone or download the project:**
+   ```bash
+   git clone <repository-url>
+   cd todo-app
+   ```
+
+2. **Create a virtual environment (recommended):**
+   ```bash
+   python -m venv venv
+   
+   # On Windows:
+   venv\Scripts\activate
+   
+   # On macOS/Linux:
+   source venv/bin/activate
+   ```
+
+3. **Install dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Create the project structure:**
+   ```
+   todo-app/
+   ├── app.py
+   ├── requirements.txt
+   ├── models/
+   │   └── todo.py
+   ├── templates/
+   │   ├── index.html
+   │   ├── about.html
+   │   ├── 404.html
+   │   └── 500.html
+   └── static/
+       └── css/
+           └── style.css
+   ```
+
+5. **Run the application:**
+   ```bash
+   python app.py
+   ```
+
+6. **Open your browser and visit:**
+   ```
+   http://localhost:5000
+   ```
+
+## 🔧 Configuration
+
+### Environment Variables
+
+You can set these environment variables for additional configuration:
+
+- `SECRET_KEY`: Flask secret key for session management (default: 'your-secret-key-here')
+- `FLASK_ENV`: Set to 'development' for debug mode
+
+### Data Storage
+
+Tasks are automatically saved to a `tasks.json` file in the project root. This file is created automatically when you add your first task.
+
+## 🎮 Usage
+
+### Basic Operations
+
+1. **Add a Task**: Enter task title, select priority and category, optionally set due date
+2. **Complete Task**: Click the checkbox next to any task
+3. **Edit Task**: Double-click on task text or click the edit icon
+4. **Delete Task**: Click the delete icon or use bulk delete
+5. **Search**: Use the search box to find tasks by title or notes
+6. **Filter**: Use filter buttons to show specific types of tasks
+
+### Advanced Features
+
+- **Bulk Selection**: Use the select checkboxes and bulk action buttons
+- **Keyboard Shortcuts**:
+  - `Ctrl+A`: Select all tasks
+  - `Delete`: Delete selected tasks
+- **Categories**: Organize tasks into Work, Personal, Shopping, Health, etc.
+- **Due Dates**: Set deadlines and track overdue tasks
+- **Notes**: Add detailed descriptions to tasks (click edit to access)
+
+## 🛡️ Error Handling
+
+The application includes comprehensive error handling:
+
+- **404 Page**: Custom page for missing routes
+- **500 Page**: Custom page for server errors
+- **Form Validation**: Client and server-side validation
+- **AJAX Error Handling**: Graceful handling of API failures
+
+## 🎨 Customization
+
+### Themes and Styling
+
+The CSS uses CSS custom properties (variables) for easy theming. Edit the `:root` section in `style.css` to customize colors:
+
+```css
+:root {
+    --primary-color: #6366f1;
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+    --danger-color: #ef4444;
+    /* ... more variables */
+}
+```
+
+### Adding New Categories
+
+Edit the category options in both `index.html` and the edit modal:
+
+```html
+<option value="your-category">Your Category</option>
+```
+
+## 🔄 API Endpoints
+
+The application provides several API endpoints:
+
+- `GET /` - Main todo list page
+- `POST /tasks` - Create new task
+- `PUT /tasks/<id>` - Update existing task
+- `DELETE /tasks/<id>` - Delete task
+- `GET /tasks/<id>/details` - Get task details
+- `POST /tasks/bulk-delete` - Delete multiple tasks
+- `POST /tasks/clear-completed` - Clear all completed tasks
+- `GET /api/stats` - Get task statistics
+- `GET /api/categories` - Get all categories
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+1. **Import Errors**: Make sure you've installed all requirements
+2. **Template Errors**: Ensure all template files are in the `templates/` directory
+3. **Static Files**: CSS should be in `static/css/style.css`
+4. **Port Conflicts**: Change the port in `app.py` if 5000 is in use
+
+### Debug Mode
+
+To run in debug mode:
+```bash
+export FLASK_ENV=development  # On macOS/Linux
+set FLASK_ENV=development     # On Windows
+python app.py
+```
+
+## 📜 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
+
+## 📝 Changelog
+
+### Version 2.0.0
+- Complete UI/UX overhaul
+- Added task categories and due dates
+- Implemented search functionality
+- Added bulk operations
+- Enhanced mobile responsiveness
+- Added task statistics
+- Improved error handling
+
+### Version 1.0.0
+- Basic task CRUD operations
+- Priority system
+- Simple UI
+
+## 🆘 Support
+
+If you encounter any issues or have questions:
+
+1. Check the troubleshooting section
+2. Look at existing issues in the repository
+3. Create a new issue with detailed information
+4. Contact the development team
+
+---
+
+**Happy Task Managing! 📋✨**
