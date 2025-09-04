@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .task-list { list-style: none; padding: 0; }
+        .task-item { display: flex; align-items: center; margin: 10px 0; padding: 10px; border: 1px solid #ddd; }
+        .task-text { margin: 0 10px; flex-grow: 1; }
+        .task-checkbox { margin-right: 10px; }
+        .error { color: red; display: none; margin: 10px 0; }
+        .completed { text-decoration: line-through; color: #666; }
+        .nav { margin-bottom: 20px; }
+        .nav a { margin-right: 10px; }
+        .priority-high { border-left: 4px solid #ff4444; }
+        .priority-medium { border-left: 4px solid #ffbb33; }
+        .priority-low { border-left: 4px solid #00C851; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="{{ url_for('about') }}">About</a>
+        </div>
+        <h1>Todo List</h1>
+        <div id="errorMessage" class="error"></div>
+        <form id="addTaskForm" action="{{ url_for('create_task') }}" method="POST">
+            <input type="text" name="task" placeholder="Enter a task" required>
+            <select name="priority" required>
+                <option value="high">High Priority</option>
+                <option value="medium" selected>Medium Priority</option>
+                <option value="low">Low Priority</option>
+            </select>
+            <button type="submit">Add Task</button>
+        </form>
+        <ul class="task-list">
+            {% for task in tasks %}
+            <li class="task-item priority-{{ task.priority }}" data-task-id="{{ task.id }}">
+                <input type="checkbox" class="task-checkbox" 
+                    {% if task.completed %}checked{% endif %}>
+                <span class="task-text {% if task.completed %}completed{% endif %}">
+                    {{ task.title }}
+                </span>
+                <select class="priority-select" onchange="updatePriority({{ task.id }}, this.value)">
+                    <option value="high" {% if task.priority == 'high' %}selected{% endif %}>High</option>
+                    <option value="medium" {% if task.priority == 'medium' %}selected{% endif %}>Medium</option>
+                    <option value="low" {% if task.priority == 'low' %}selected{% endif %}>Low</option>
+                </select>
+                <form class="delete-form" method="POST" 
+                    action="{{ url_for('delete_task', task_id=task.id) }}">
+                    <button type="submit" class="delete-btn">Delete</button>
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <script>
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            setTimeout(() => errorDiv.style.display = 'none', 3000);
+        }
+
+        function updateTask(taskId, completed, element) {
+            const taskText = element.parentElement.querySelector('.task-text');
+            fetch(`/tasks/${taskId}`, {
+                method: 'PUT',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({completed: completed})
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Failed to update task');
+                return response.json();
+            })
+            .then(() => {
+                taskText.classList.toggle('completed', completed);
+            })
+            .catch(error => {
+                showError('Failed to update task');
+                element.checked = !completed; // revert checkbox
+            });
+        }
+
+        function updatePriority(taskId, priority) {
+            fetch(`/tasks/${taskId}`, {
+                method: 'PUT',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({priority: priority})
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Failed to update priority');
+                return response.json();
+            })
+            .then(() => {
+                const taskItem = document.querySelector(`[data-task-id="${taskId}"]`);
+                taskItem.className = `task-item priority-${priority}`;
+            })
+            .catch(error => showError('Failed to update priority'));
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle checkbox changes
+            document.querySelectorAll('.task-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    updateTask(this.parentElement.dataset.taskId, this.checked, this);
+                });
+            });
+
+            // Handle task text double-click
+            document.querySelectorAll('.task-text').forEach(item => {
+                item.addEventListener('dblclick', function() {
+                    const taskId = this.parentElement.dataset.taskId;
+                    const currentText = this.textContent.trim();
+                    const newTitle = prompt('Edit task:', currentText);
+                    
+                    if (newTitle && newTitle !== currentText) {
+                        this.textContent = 'Updating...';
+                        fetch(`/tasks/${taskId}`, {
+                            method: 'PUT',
+                            headers: {'Content-Type': 'application/json'},
+                            body: JSON.stringify({title: newTitle})
+                        })
+                        .then(response => {
+                            if (!response.ok) throw new Error('Failed to update task');
+                            return response.json();
+                        })
+                        .then(() => {
+                            this.textContent = newTitle;
+                        })
+                        .catch(error => {
+                            this.textContent = currentText;
+                            showError('Failed to update task');
+                        });
+                    }
+                });
+            });
+
+            // Prevent double form submission
+            document.querySelectorAll('form').forEach(form => {
+                form.addEventListener('submit', function() {
+                    this.querySelector('button').disabled = true;
+                });
+            });
+        });
+    </script>
+</body>
+</html>
