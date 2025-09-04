@@ -654,6 +654,68 @@
             60% { content: '..'; }
             80%, 100% { content: '...'; }
         }
+
+        /* Footer styles */
+.footer {
+  background-color: #f8f9fa;
+  padding: 2rem 0;
+  border-top: 1px solid #e9ecef;
+}
+
+.footer-logo {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.footer-logo img {
+  max-width: 150px;
+}
+
+.footer-nav {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.footer-nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-nav ul li {
+  display: inline;
+  margin: 0 1rem;
+}
+
+.footer-nav ul li a {
+  text-decoration: none;
+  color: #007bff;
+  transition: color 0.3s;
+}
+
+.footer-nav ul li a:hover {
+  color: #0056b3;
+}
+
+.footer-dev-links {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.footer-dev-links a {
+  text-decoration: none;
+  color: #6c757d;
+  transition: color 0.3s;
+}
+
+.footer-dev-links a:hover {
+  color: #343a40;
+}
+
+.footer-copyright {
+  text-align: center;
+  font-size: 0.875rem;
+  color: #6c757d;
+}
     </style>
 </head>
 
@@ -676,7 +738,7 @@
     <div class="container">
         <div class="main-card animate__animated animate__fadeInUp">
             <div class="card-header">
-                <h1><i class="material-icons">check_circle</i> Enhanced Todo List</h1>
+                <h1><i class="material-icons">check_circle</i> Todo List</h1>
             </div>
             
             <div class="card-body">
@@ -931,16 +993,6 @@
         </div>
       </div>
 
-<div class="chat-footer">
-  <form action="#" class="chat-form">
-    <textarea placeholder="Message..." class="message-input" required></textarea>
-    <div class="chat-controls">
-      <button type="submit" id="send-message" class="material-symbols-rounded send-btn">
-        arrow_upward
-      </button>
-    </div>
-  </form>
-</div>
 
 
     <!-- Add required links for chatbot -->
@@ -1403,7 +1455,56 @@
         document.getElementById('preloader').style.display = 'none';
     }, 3000); // 3 seconds delay
 });
+    document.getElementById("year").textContent = new Date().getFullYear();
+
     </script>
         <!-- Add this before the closing </body> tag -->
+           
+  <form action="#" class="chat-form">
+    <textarea placeholder="Message..." class="message-input" required></textarea>
+    <div class="chat-controls">
+      <button type="submit" id="send-message" class="material-symbols-rounded send-btn">
+        arrow_upward
+      </button>
+    </div>
+  </form>
+ </div>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <!-- Logo -->
+        <div class="footer-logo">
+          <img src="https://i.pinimg.com/736x/31/14/5e/31145e7925e59e8fb344f13422435dba.jpg" alt="Site Logo" />
+        </div>
+
+        <!-- Navigation Links -->
+
+
+        <!-- Developer Links -->
+        <div class="footer-dev-links d-flex flex-column flex-md-row justify-content-center align-items-center gap-2 mt-3">
+          <a href="https://github.com/Binary-Explorers" target="_blank" rel="noopener noreferrer" title="GitHub Profile" class="footer-link d-flex align-items-center px-3 py-2 rounded bg-light shadow-sm">
+            <i class="fab fa-github me-2 fa-lg"></i> Main Org
+          </a>
+          <a href="https://github.com/Rajath2005/to-do-list" target="_blank" rel="noopener noreferrer" class="footer-link d-flex align-items-center px-3 py-2 rounded bg-light shadow-sm">
+            <i class="fab fa-github me-2 fa-sm"></i> Project Repo
+          </a>
+          <a href="https://github.com/Rajath2005/to-do-list/blob/main/README.md" target="_blank" rel="noopener noreferrer" class="footer-link d-flex align-items-center px-3 py-2 rounded bg-light shadow-sm">
+            <span class="me-2">📄</span> README
+          </a>
+
+        </div>
+
+        <!-- Copyright -->
+        <div class="footer-copyright">
+          <small class="text-muted">
+            &copy; <span id="year"></span> MediQ. All rights reserved. | Built by❤️
+            <a href="https://github.com/Binary-Explorers" target="_blank" rel="noopener noreferrer" class="text-decoration-none text-dark fw-bold">
+              Binary Explorers
+            </a>
+          </small>
+        </div>
+      </footer>
+</body>
+
 
 </html>
