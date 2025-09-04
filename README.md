@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Flask Todo List Application
 
 A simple todo list application built with Flask.
@@ -11,3 +12,6 @@ A simple todo list application built with Flask.
 1. Clone the repository
 2. Install dependencies
 3. Run `python app.py`
+=======
+# to-do-list
+>>>>>>> d0d57e5ad77c1f5c68c4d51ca98703dfd11b02d9
